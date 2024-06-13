@@ -1,0 +1,95 @@
+﻿@layout CustomLayout
+@page "/solve-list"
+@using BlazorApp.HttpServices
+@inject SolveSheetHttpService solveSheetHttpService
+@inject NavigationManager navigationManager
+
+<div class="container">
+    <div class="row justify-content-center center-align">
+        <div class="col-sm-12 col-md-10 col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">SolveSheet List</h4>
+                    <p class="card-description">
+                        <div class="list-card-header d-flex justify-content-between">
+                            <NavLink href="/solvesheet/create" class="btn btn-primary"><i class="bi bi-file-earmark-plus"></i> Create</NavLink>
+                        </div>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Issue Description</th>
+                                    <th>Solve Date</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in solveSheets)
+                                {
+                                    var IssueLog = issueLogs.FirstOrDefault(i => i.Oid == s.IssueLogId);
+                                    <tr>
+                                        <td>@IssueLog?.IssueDescription</td>
+                                        <td>@s.SolveDate.ToString("dd-MM-yyyy")</td>
+                                        <td>@s.Comments</td>
+                                        <td>@s.Status</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-info btn-action" @onclick="@(() => navigationManager.NavigateTo($"/solvesheet/edit/{s.Oid}"))" data-toggle="tooltip" title="Edit">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a class="btn btn-danger btn-action" @onclick="@(() => navigationManager.NavigateTo($"/solvesheet/delete/{s.Oid}"))" data-toggle="tooltip" title="Delete">
+                                                    <i class="bi bi-trash3"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<SolveSheet> solveSheets = new List<SolveSheet>();
+    private List<IssueLog> issueLogs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllSolveSheets();
+        issueLogs = await solveSheetHttpService.GetIssueLogsAsync();
+    }
+    private async Task GetAllSolveSheets()
+    {
+        solveSheets = await solveSheetHttpService.GetSolveSheetsAsync();
+    }
+}
+<style>
+    .center-align {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .col-lg-6 {
+        margin: 0 auto;
+    }
+
+    .btn {
+        margin-right: 5px;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+
+        .btn i {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+</style>

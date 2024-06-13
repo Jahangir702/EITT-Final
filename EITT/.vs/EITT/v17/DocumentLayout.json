@@ -1,0 +1,172 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\insti\\source\\repos\\EITT\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1D3C6D21-90FC-42CB-8D48-E73BB4EF2987}|SharedClass\\SharedClass.csproj|c:\\users\\insti\\source\\repos\\eitt\\sharedclass\\baseapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D3C6D21-90FC-42CB-8D48-E73BB4EF2987}|SharedClass\\SharedClass.csproj|solutionrelative:sharedclass\\baseapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{172DC124-F659-4EF1-BD63-5D3781515019}|Api\\Api.csproj|c:\\users\\insti\\source\\repos\\eitt\\api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{172DC124-F659-4EF1-BD63-5D3781515019}|Api\\Api.csproj|solutionrelative:api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D3C6D21-90FC-42CB-8D48-E73BB4EF2987}|SharedClass\\SharedClass.csproj|c:\\users\\insti\\source\\repos\\eitt\\sharedclass\\basecomponent\\issuelogbasecomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D3C6D21-90FC-42CB-8D48-E73BB4EF2987}|SharedClass\\SharedClass.csproj|solutionrelative:sharedclass\\basecomponent\\issuelogbasecomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21252BE3-5DEF-410A-992C-8AD3D601D955}|BlazorApp\\BlazorApp.csproj|c:\\users\\insti\\source\\repos\\eitt\\blazorapp\\pages\\projects.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{21252BE3-5DEF-410A-992C-8AD3D601D955}|BlazorApp\\BlazorApp.csproj|solutionrelative:blazorapp\\pages\\projects.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A2ADA1B-104C-4654-B5C0-1D3E13310314}|SharedComponent\\SharedComponent.csproj|c:\\users\\insti\\source\\repos\\eitt\\sharedcomponent\\components\\projects.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6A2ADA1B-104C-4654-B5C0-1D3E13310314}|SharedComponent\\SharedComponent.csproj|solutionrelative:sharedcomponent\\components\\projects.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A2ADA1B-104C-4654-B5C0-1D3E13310314}|SharedComponent\\SharedComponent.csproj|c:\\users\\insti\\source\\repos\\eitt\\sharedcomponent\\components\\registration.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6A2ADA1B-104C-4654-B5C0-1D3E13310314}|SharedComponent\\SharedComponent.csproj|solutionrelative:sharedcomponent\\components\\registration.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A2ADA1B-104C-4654-B5C0-1D3E13310314}|SharedComponent\\SharedComponent.csproj|c:\\users\\insti\\source\\repos\\eitt\\sharedcomponent\\components\\useredit.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6A2ADA1B-104C-4654-B5C0-1D3E13310314}|SharedComponent\\SharedComponent.csproj|solutionrelative:sharedcomponent\\components\\useredit.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A2ADA1B-104C-4654-B5C0-1D3E13310314}|SharedComponent\\SharedComponent.csproj|c:\\users\\insti\\source\\repos\\eitt\\sharedcomponent\\components\\user-list.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6A2ADA1B-104C-4654-B5C0-1D3E13310314}|SharedComponent\\SharedComponent.csproj|solutionrelative:sharedcomponent\\components\\user-list.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\insti\\source\\repos\\EITT\\Api\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Api\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\insti\\source\\repos\\EITT\\Api\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Api\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-11T08:13:41.253Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BaseApi.cs",
+              "DocumentMoniker": "C:\\Users\\insti\\source\\repos\\EITT\\SharedClass\\BaseApi.cs",
+              "RelativeDocumentMoniker": "SharedClass\\BaseApi.cs",
+              "ToolTip": "C:\\Users\\insti\\source\\repos\\EITT\\SharedClass\\BaseApi.cs",
+              "RelativeToolTip": "SharedClass\\BaseApi.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T08:10:06.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Projects.razor",
+              "DocumentMoniker": "C:\\Users\\insti\\source\\repos\\EITT\\BlazorApp\\Pages\\Projects.razor",
+              "RelativeDocumentMoniker": "BlazorApp\\Pages\\Projects.razor",
+              "ToolTip": "C:\\Users\\insti\\source\\repos\\EITT\\BlazorApp\\Pages\\Projects.razor",
+              "RelativeToolTip": "BlazorApp\\Pages\\Projects.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T07:04:31.57Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Projects.razor",
+              "DocumentMoniker": "C:\\Users\\insti\\source\\repos\\EITT\\SharedComponent\\Components\\Projects.razor",
+              "RelativeDocumentMoniker": "SharedComponent\\Components\\Projects.razor",
+              "ToolTip": "C:\\Users\\insti\\source\\repos\\EITT\\SharedComponent\\Components\\Projects.razor",
+              "RelativeToolTip": "SharedComponent\\Components\\Projects.razor",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T07:04:09.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Registration.razor",
+              "DocumentMoniker": "C:\\Users\\insti\\source\\repos\\EITT\\SharedComponent\\Components\\Registration.razor",
+              "RelativeDocumentMoniker": "SharedComponent\\Components\\Registration.razor",
+              "ToolTip": "C:\\Users\\insti\\source\\repos\\EITT\\SharedComponent\\Components\\Registration.razor",
+              "RelativeToolTip": "SharedComponent\\Components\\Registration.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T07:04:08.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IssueLogBaseComponent.cs",
+              "DocumentMoniker": "C:\\Users\\insti\\source\\repos\\EITT\\SharedClass\\BaseComponent\\IssueLogBaseComponent.cs",
+              "RelativeDocumentMoniker": "SharedClass\\BaseComponent\\IssueLogBaseComponent.cs",
+              "ToolTip": "C:\\Users\\insti\\source\\repos\\EITT\\SharedClass\\BaseComponent\\IssueLogBaseComponent.cs",
+              "RelativeToolTip": "SharedClass\\BaseComponent\\IssueLogBaseComponent.cs",
+              "ViewState": "AQIAAIQAAAAAAAAAAAAiwJcAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T06:59:19.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserEdit.razor",
+              "DocumentMoniker": "C:\\Users\\insti\\source\\repos\\EITT\\SharedComponent\\Components\\UserEdit.razor",
+              "RelativeDocumentMoniker": "SharedComponent\\Components\\UserEdit.razor",
+              "ToolTip": "C:\\Users\\insti\\source\\repos\\EITT\\SharedComponent\\Components\\UserEdit.razor",
+              "RelativeToolTip": "SharedComponent\\Components\\UserEdit.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T06:58:44.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "User-List.razor",
+              "DocumentMoniker": "C:\\Users\\insti\\source\\repos\\EITT\\SharedComponent\\Components\\User-List.razor",
+              "RelativeDocumentMoniker": "SharedComponent\\Components\\User-List.razor",
+              "ToolTip": "C:\\Users\\insti\\source\\repos\\EITT\\SharedComponent\\Components\\User-List.razor",
+              "RelativeToolTip": "SharedComponent\\Components\\User-List.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-11T06:58:42.126Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

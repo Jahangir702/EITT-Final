@@ -1,0 +1,134 @@
+﻿@using Domain.Entities
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.JSInterop
+@inherits SharedClass.BaseComponent.ProjectBaseComponent
+@inject IJSRuntime js
+@inject NavigationManager NavigationManager
+@inject IToastService toastService
+@using Blazored.Toast.Configuration
+
+<SharedComponent.Components.RequireAuthenticated></SharedComponent.Components.RequireAuthenticated>
+
+ <div class="row d-flex justify-content-center">
+    <div class="col-lg-12 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between">Projects</h4>
+                <!-- Search Section -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                            <input type="text" class="form-control mb-1" @bind="searchQuery" placeholder="Search Project..." />
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                            <button class="btn btn-gradient-info btn-rounded btn-fw" @onclick="SearchProjects"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                            <button class="btn btn-gradient-light btn-rounded btn-fw mt-sm-2 mt-2 mt-md-2 mt-lg-0" @onclick="ClearSearch"><i class="fa-solid fa-eraser"></i> Clear</button>
+                    </div>
+                </div>
+
+                @if (projects != null && projects.Count != 0)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var project in pagedProjects)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (project.EditMode)
+                                        {
+                                            <input type="text" class="form-control" @bind=project.Description />
+                                        }
+                                        else
+                                        {
+                                            @project.Description
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!project.EditMode)
+                                        {
+                                            <button type="button" class="btn btn-primary btn-sm" @onclick="() => ToggleEditMode(project)">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger btn-sm" @onclick="() => DeleteProjectAsync(project)">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-gradient-primary btn-icon-text" @onclick="() => UpdateProjectAsync(project)">
+                                                <i class="mdi mdi-file-check btn-icon-prepend"></i> Save
+                                            </button>
+                                            <button type="button" class="btn btn-gradient-danger btn-icon-text" @onclick="() => CancelEdit(project)">
+                                                <i class="fa fa-times-rectangle"></i> Cancel
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @* Pagination Controls *@
+                    <div class="d-flex justify-content-end mt-2">
+                        <button class="btn btn-gradient-primary btn-sm me-2" @onclick="PreviousPage" disabled="@(!HasPreviousPage)"><i class="fa-solid fa-left-long"></i></button>
+                        <span>Page @currentPage of @totalPages</span>
+                        <button class="btn btn-gradient-primary btn-sm ms-2" @onclick="NextPage" disabled="@(!HasNextPage)"><i class="fa-solid fa-right-long"></i></button>
+                    </div>
+                }
+                @if (!AddRow)
+                {
+                    <div class="row">
+                        <div class="template-demo">
+                            <button class="btn btn-outline-primary btn-fw" @onclick="() => AddrowButton()"><i class="mdi mdi-file-check btn-icon-prepend"></i> Add Project</button>
+                        </div>
+                    </div>
+
+                }
+
+                @if (AddRow)
+                {
+                    <EditForm Model="project" OnValidSubmit="CreateProjectAsync">
+                        <DataAnnotationsValidator />
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" @bind=project.Description placeholder="Project Name" />
+                                        <ValidationMessage For="@(() => project.Description)" style="color:red" />
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-gradient-primary btn-icon-text" type="submit"><i class="mdi mdi-file-check btn-icon-prepend"></i> Add</button>
+                                        <button class="btn btn-gradient-danger btn-icon-text" @onclick="()=>CancelRow()"><i class="fa fa-times-rectangle"></i> Cancel</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+    protected async Task AddrowButton()
+    {
+        AddRow = true;
+    }
+    protected async Task CancelRow()
+    {
+        AddRow = false;
+    }
+
+}

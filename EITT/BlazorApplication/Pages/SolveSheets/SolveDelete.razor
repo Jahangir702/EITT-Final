@@ -1,0 +1,96 @@
+﻿@layout CustomLayout
+@page "/solvesheet/delete/{key}"
+@using BlazorApp.HttpServices
+@using static Utilities.Constants.Enums
+@inject SolveSheetHttpService solvesheetHttpService
+@inject NavigationManager Navigation
+
+<div class="container">
+    <h3>Delete SolveSheet</h3>
+
+    @if (solveSheet == null)
+    {
+        <LoadingIndicator />
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <p>Are you sure you want to delete the SolveSheet <strong>@solveSheet.Oid</strong>?</p>
+            <button class="btn btn-danger" @onclick="DeleteSolveSheet">Delete</button>
+            <button class="btn btn-light" @onclick="CancelEdit">Cancel</button>
+        </div>
+    }
+</div>
+
+@code {
+    private SolveSheet solveSheet;
+    private List<IssueLog> issueLogs;
+
+    [Parameter]
+    public string key { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(key))
+        {
+            solveSheet = await solvesheetHttpService.GetSolveSheetByIdAync(Guid.Parse(key));
+        }
+
+        issueLogs = await solvesheetHttpService.GetIssueLogsAsync();
+    }
+
+    private async Task DeleteSolveSheet()
+    {
+        try
+        {
+            await solvesheetHttpService.DeleteSolveSheetAsync(key);
+            Navigation.NavigateTo("/solve-list");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    private void CancelEdit()
+    {
+        Navigation.NavigateTo("/solve-list");
+    }
+}
+<style>
+    body {
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .alert {
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+            border-color: #545b62;
+        }
+
+</style>

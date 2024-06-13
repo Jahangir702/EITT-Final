@@ -1,0 +1,67 @@
+﻿@layout CustomLayout
+@page "/modules/create"
+@using BlazorApp.HttpServices
+@inject ModuleHttpService moduleHttpService
+@inject NavigationManager Navigation
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-8">
+            <EditForm Model="@module">
+                <DataAnnotationsValidator />
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Create Module</h4>
+                        <form class="forms-sample">
+                            <div class="form-group">
+                                <select class="form-control" @bind="module.ProjectId">
+                                    <option value="">Select a Project</option>
+                                    @foreach (var project in projects)
+                                    {
+                                        <option value="@project.Oid">@project.Description</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="exampleInputName1" placeholder="Module Name" @bind="module.Description">
+                                <ValidationMessage For="@(() => module.Description)" />
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-gradient-primary me-md-2 mb-2 mb-md-0" @onclick="CreateModule">Submit</button>
+                                <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    Module module = new Module();
+    List<Project> projects = new List<Project>();
+
+    private async Task CreateModule()
+    {
+        var createdModule = await moduleHttpService.CreateModuleAsync(module);
+        Navigation.NavigateTo("/modules");
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/modules");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            projects = await moduleHttpService.GetProjectsAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}

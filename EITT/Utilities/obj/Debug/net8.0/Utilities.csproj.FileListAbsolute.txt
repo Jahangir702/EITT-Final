@@ -1,0 +1,15 @@
+C:\Users\insti\source\repos\EITT\Utilities\bin\Debug\net8.0\Utilities.deps.json
+C:\Users\insti\source\repos\EITT\Utilities\bin\Debug\net8.0\Utilities.runtimeconfig.json
+C:\Users\insti\source\repos\EITT\Utilities\bin\Debug\net8.0\Utilities.dll
+C:\Users\insti\source\repos\EITT\Utilities\bin\Debug\net8.0\Utilities.pdb
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.csproj.AssemblyReference.cache
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.AssemblyInfoInputs.cache
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.AssemblyInfo.cs
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.csproj.CoreCompileInputs.cache
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.sourcelink.json
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.dll
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\refint\Utilities.dll
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.pdb
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\Utilities.genruntimeconfig.cache
+C:\Users\insti\source\repos\EITT\Utilities\obj\Debug\net8.0\ref\Utilities.dll

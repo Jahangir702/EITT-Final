@@ -1,0 +1,16 @@
+C:\Users\insti\source\repos\EITT\Domain\bin\Debug\net8.0\Domain.deps.json
+C:\Users\insti\source\repos\EITT\Domain\bin\Debug\net8.0\Domain.dll
+C:\Users\insti\source\repos\EITT\Domain\bin\Debug\net8.0\Domain.pdb
+C:\Users\insti\source\repos\EITT\Domain\bin\Debug\net8.0\Utilities.dll
+C:\Users\insti\source\repos\EITT\Domain\bin\Debug\net8.0\Utilities.pdb
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.csproj.AssemblyReference.cache
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.csproj.Up2Date
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.dll
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\refint\Domain.dll
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\Domain.pdb
+C:\Users\insti\source\repos\EITT\Domain\obj\Debug\net8.0\ref\Domain.dll

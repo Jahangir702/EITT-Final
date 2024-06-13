@@ -1,0 +1,83 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = BlazorApp
+build_property.RootNamespace = BlazorApp
+build_property.ProjectDir = C:\Users\insti\source\repos\EITT\BlazorApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\insti\source\repos\EITT\BlazorApp
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Layout/CustomLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XEN1c3RvbUxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Layout/LoadingIndicator.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XExvYWRpbmdJbmRpY2F0b3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Layout/LoginLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XExvZ2luTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/IssueLogs.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSXNzdWVMb2dzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/Modules.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kdWxlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/Projects.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/Registration.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cmF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/SolveSheets.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU29sdmVTaGVldHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/User-List.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlci1MaXN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Pages/UserEdit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlckVkaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/BlazorApp/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-kc989pta5g

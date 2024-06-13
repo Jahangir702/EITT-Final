@@ -1,0 +1,63 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows,browser
+build_property.RootNamespace = SharedComponent
+build_property.RootNamespace = SharedComponent
+build_property.ProjectDir = C:\Users\insti\source\repos\EITT\SharedComponent\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\insti\source\repos\EITT\SharedComponent
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/IssueLogs.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJc3N1ZUxvZ3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/Modules.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNb2R1bGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/Projects.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQcm9qZWN0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/Registration.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSZWdpc3RyYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/RequireAuthenticated.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSZXF1aXJlQXV0aGVudGljYXRlZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/SolveSheets.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTb2x2ZVNoZWV0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/User-List.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xVc2VyLUxpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Components/UserEdit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xVc2VyRWRpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/insti/source/repos/EITT/SharedComponent/Component1.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50MS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-cwnw5e9p3y

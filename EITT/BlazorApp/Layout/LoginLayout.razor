@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+<div class="col-12">
+    <br /><br />
+    @Body
+</div>
+<BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopCenter"
+                Timeout="5"
+                IconType="Blazored.Toast.Configuration.IconType.FontAwesome"
+                SuccessClass="success-toast-override"
+                SuccessIcon="fa fa-thumbs-up"
+                ErrorIcon="fa fa-bug"
+                WarningIcon="fa fa-warning"
+                InfoIcon="fa fa-info-circle" />
+
+<style>
+    .blazored-toast {
+        margin-top: 20px !important;
+    }
+
+    .blazored-toast-container {
+        margin-top: 20px !important;
+    }
+</style>

@@ -1,0 +1,151 @@
+﻿@layout CustomLayout
+@page "/solvesheet/edit/{key}"
+@using BlazorApp.HttpServices
+@using static Utilities.Constants.Enums
+@inject SolveSheetHttpService solvesheetHttpService
+@inject NavigationManager Navigation
+
+@if (solveSheet == null)
+{
+    <LoadingIndicator/>
+}
+else
+{
+    <div class="container">
+        <h3>Edit SolveSheet</h3>
+
+        <div class="card bg-light">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="issueLogs">Issue Description:</label>
+                    <select class="form-control" @bind="solveSheet.IssueLogId">
+                        <option value="">Select an IssueLog</option>
+                        @foreach (var issueLog in issueLogs)
+                        {
+                            <option value="@issueLog.Oid">@issueLog.IssueDescription</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="solvedate">Solve Date:</label>
+                    <input type="date" class="form-control" @bind="solveSheet.SolveDate" />
+                </div>
+
+                <div class="form-group">
+                    <label for="Status">Status:</label>
+                    <select class="form-control" @bind="solveSheet.Status" required>
+                        <option value="0" selected>Select</option>
+                        @foreach (Status status in Enum.GetValues(typeof(Status)))
+                        {
+                            <option value="@status">@status</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comments">Comments:</label>
+                    <textarea id="comments" class="form-control" @bind="solveSheet.Comments" />
+                </div>
+
+                <button class="btn btn-gradient-primary me-2" @onclick="UpdateSolveSheet">Save</button>
+                <button type="button" class="btn btn-light" @onclick="CancelEdit">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    private SolveSheet solveSheet;
+    private List<IssueLog> issueLogs;
+
+    [Parameter]
+    public string key { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(key))
+        {
+            solveSheet = await solvesheetHttpService.GetSolveSheetByIdAync(Guid.Parse(key));
+        }
+
+        issueLogs = await solvesheetHttpService.GetIssueLogsAsync();
+    }
+
+    private async Task UpdateSolveSheet()
+    {
+        try
+        {
+            await solvesheetHttpService.UpdateSolveSheetAsync(solveSheet);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            Navigation.NavigateTo("/solve-list");
+        }
+    }
+
+    private void CancelEdit()
+    {
+        Navigation.NavigateTo("/solve-list");
+    }
+}
+<style>
+    body {
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        transition: border-color 0.2s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+            border-color: #545b62;
+        }
+
+</style>

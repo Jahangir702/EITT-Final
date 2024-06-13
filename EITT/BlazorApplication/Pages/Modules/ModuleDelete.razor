@@ -1,0 +1,96 @@
+﻿@layout CustomLayout
+@page "/modules/delete/{key}"
+@using BlazorApp.HttpServices
+@inject ModuleHttpService moduleHttpService
+@inject NavigationManager navigationManager
+
+<div class="container">
+    <h3>Delete Module</h3>
+
+    @if (module == null)
+    {
+        <LoadingIndicator />
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <p>Are you sure you want to delete the Module <strong>@module.Description</strong>?</p>
+            <button class="btn btn-danger" @onclick="DeleteModule">Delete</button>
+            <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+        </div>
+    }
+</div>
+
+@code {
+    private Module module;
+    //private List<Project> projectLists;
+
+    [Parameter]
+    public string key { get; set; }
+
+    private List<Project> projects = new List<Project>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(key))
+        {
+            module = await moduleHttpService.GetModuleByIdAsync(int.Parse(key));
+        }
+        projects = await moduleHttpService.GetProjectsAsync();
+    }
+
+    private async Task DeleteModule()
+    {
+        try
+        {
+            await moduleHttpService.DeleteModuleAsync(key);
+            navigationManager.NavigateTo("/modules");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    private void Cancel()
+    {
+        navigationManager.NavigateTo("/modules");
+    }
+}
+<style>
+    body {
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .alert {
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+            border-color: #545b62;
+        }
+
+</style>

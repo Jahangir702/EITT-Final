@@ -1,0 +1,189 @@
+﻿@layout CustomLayout
+@page "/issuelog/edit/{key}"
+@using BlazorApp.HttpServices
+@using static Utilities.Constants.Enums
+@inject IssueLogHttpService issueLogHttpService
+@inject NavigationManager Navigation
+
+@if (issueLog == null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <div class="container">
+        <h3>Edit IssueLog</h3>
+
+        <div class="card bg-light">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="module">Module:</label>
+                    <select class="form-control" @bind="issueLog.ModuleId">
+                        <option value="">Select an Module</option>
+                        @foreach (var module in modules)
+                        {
+                            <option value="@module.Oid">@module.Description</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="userAccount">UserAccount:</label>
+                    <select class="form-control" @bind="issueLog.UserAccountId">
+                        <option value="">Select an UserAccount</option>
+                        @foreach (var useraccount in userAccounts)
+                        {
+                            <option value="@useraccount.Oid">@useraccount.Username</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="incidentCategory">IncidentCategory:</label>
+                    <input type="text" class="form-control" @bind="issueLog.IncidentCategory" />
+                </div>
+
+                <div class="form-group">
+                    <label for="issueDescription">IssueDescription:</label>
+                    <input type="text" class="form-control" @bind="issueLog.IssueDescription" />
+                </div>
+
+                <div class="form-group">
+                    <label for="testProdcedure">TestProdcedure:</label>
+                    <input type="text" class="form-control" @bind="issueLog.TestProdcedure" />
+                </div>
+
+                <div class="form-group">
+                    <label for="imagelinks">Imagelinks:</label>
+                    <input type="text" class="form-control" @bind="issueLog.Imagelinks" />
+                </div>
+
+                <div class="form-group">
+                    <label for="prototypelink">Prototypelink:</label>
+                    <input type="text" class="form-control" @bind="issueLog.Prototypelink" />
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Comments:</label>
+                    <textarea id="comments" class="form-control" @bind="issueLog.Comments"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="Priority">Priority:</label>
+                    <select class="form-control" @bind="issueLog.Priority" required>
+                        <option value="0" selected>Select</option>
+                        @foreach (Priority priority in Enum.GetValues(typeof(Priority)))
+                        {
+                            <option value="@priority">@priority</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueDate">IssueDate:</label>
+                    <input type="date" class="form-control" @bind="issueLog.IssueDate" />
+                </div>
+                <button class="btn btn-gradient-primary me-2" @onclick="UpdateIssueLog">Save</button>
+                <button type="button" class="btn btn-light" @onclick="CancelEdit">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    private IssueLog issueLog;
+    private List<UserAccount> userAccounts;
+    private List<Module> modules;
+
+    [Parameter]
+    public string key { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(key))
+        {
+            issueLog = await issueLogHttpService.GetIssueLogByIdAync(Guid.Parse(key));
+        }
+
+        userAccounts = await issueLogHttpService.GetUserAccountsAsync();
+        modules = await issueLogHttpService.GetModulesAsync();
+    }
+
+    private async Task UpdateIssueLog()
+    {
+        try
+        {
+            await issueLogHttpService.UpdateIssueLogAsync(issueLog);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            Navigation.NavigateTo("/issue-list");
+        }
+    }
+
+    private void CancelEdit()
+    {
+        Navigation.NavigateTo("/issue-list");
+    }
+}
+<style>
+    body {
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        transition: border-color 0.2s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+            border-color: #545b62;
+        }
+
+</style>

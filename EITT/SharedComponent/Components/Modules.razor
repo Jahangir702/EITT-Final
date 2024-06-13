@@ -1,0 +1,95 @@
+﻿@using Microsoft.JSInterop
+@inherits SharedClass.BaseComponent.ModuleBaseComponent
+@inject IJSRuntime js
+@inject NavigationManager NavigationManager
+@using System.ComponentModel.DataAnnotations
+
+
+<SharedComponent.Components.RequireAuthenticated></SharedComponent.Components.RequireAuthenticated>
+<div class="container my-2">
+    <h3 class="text-center mb-2">Modules</h3>
+    <!-- Search Section -->
+    <div class="row mb-2">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-3 mb-md-0">
+            <input type="text" class="form-control" @bind="searchQuery" placeholder="Search Module..." />
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <button class="btn btn-gradient-info btn-rounded btn-fw me-2 mb-2" @onclick="SearchModules"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            <button class="btn btn-gradient-light btn-rounded btn-fw mb-2" @onclick="ClearSearch"><i class="fa-solid fa-eraser"></i> Clear</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 card px-4 py-4 mx-2">
+            <h4 class="text-center my-3">@EditModeTitle</h4>
+            <form @onsubmit="CreateOrUpdateModule">
+                <div class="form-group mb-3">
+                    <label for="projectId" class="form-label">Project Name</label>
+                    <select class="form-control" id="projectId" @bind="selectedProjectId">
+                        <option value="">Select a Project</option>
+                        @foreach (var project in projects)
+                        {
+                            <option value="@project.Oid">@project.Description</option>
+                        }
+                    </select>
+
+                    @if (showValidationErrors && selectedProjectId == 0)
+                    {
+                        <div class="text-danger">Project is required</div>
+                    }
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="name" class="form-label">Module Name</label>
+                    <textarea class="form-control" id="name" @bind="newModuleDescription"></textarea>
+
+                    @if (showValidationErrors && string.IsNullOrWhiteSpace(newModuleDescription))
+                    {
+                        <div class="text-danger">Module name is required</div>
+                    }
+
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">@SubmitButtonLabel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-6 card px-4 py-4 mx-2">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Module Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in pagedModules)
+                        {
+                            <tr>
+                                <td>@GetProjectName(item.ProjectId)</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <button class="btn btn-primary me-2" @onclick="() => EditModule(item)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger" @onclick="() => DeleteModuleAsync(item)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-gradient-primary btn-sm me-2" @onclick="PreviousPage" disabled="@(!HasPreviousPage)"><i class="fa-solid fa-left-long"></i></button>
+                <span class="align-self-center">Page @currentPage of @totalPages</span>
+                <button class="btn btn-gradient-primary btn-sm ms-2" @onclick="NextPage" disabled="@(!HasNextPage)"><i class="fa-solid fa-right-long"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

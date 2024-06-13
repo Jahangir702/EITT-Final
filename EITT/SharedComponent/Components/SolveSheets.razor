@@ -1,0 +1,225 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.JSInterop
+@using static Utilities.Constants.Enums
+@inherits SharedClass.BaseComponent.SolveSheetBaseComponent
+@inject IJSRuntime js
+@inject NavigationManager NavigationManager
+
+<SharedComponent.Components.RequireAuthenticated></SharedComponent.Components.RequireAuthenticated>
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-12 col-md-10 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between">SolveSheet</h4>
+                <!-- Search Section -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <input type="text" class="form-control mb-1" @bind="searchQuery" placeholder="Search Solve Comment..." />
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <button class="btn btn-gradient-info btn-rounded btn-fw" @onclick="SearchSolveSheet"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                        <button class="btn btn-gradient-light btn-rounded btn-fw mt-sm-2 mt-2 mt-md-2 mt-lg-0" @onclick="ClearSearch"><i class="fa-solid fa-eraser"></i> Clear</button>
+                    </div>
+                </div>
+                @if (solveSheets != null && solveSheets.Count != 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Issue Description</th>
+                                    <th>Solve Date</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                    @* <th>Actions</th> *@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var solvesheet in pagedSolveSheets)
+                                {
+                                    var issuelog1 = issueLogs.FirstOrDefault(s => s.Oid == solvesheet.IssueLogId);
+                                    <tr>
+                                        <td>
+                                            @if (solveSheet.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-control" @bind="solvesheet.IssueLogId">
+                                                        <option value="0" selected>Select an IssueLog</option>
+                                                        @foreach (var issuelog in issueLogs)
+                                                        {
+                                                            <option value="@issuelog.Oid">@issuelog.IssueDescription</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @issuelog1?.IssueDescription
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (solveSheet.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="date" class="form-control" @bind="solvesheet.SolveDate" placeholder="Solve Date" />
+                                                    <label>Solve Date</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @solveSheet.SolveDate.ToString("dd-MM-yyyy")
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (solveSheet.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" @bind="solvesheet.Comments" placeholder="Comments" />
+                                                    <label>Comments</label>
+                                                </div>
+
+                                            }
+                                            else
+                                            {
+                                                @solvesheet.Comments
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (solveSheet.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-control" @bind="solvesheet.Status" required>
+                                                        <option value="0" selected>Select</option>
+                                                        @foreach (Status status in Enum.GetValues(typeof(Status)))
+                                                        {
+                                                            <option value="@status">@status</option>
+                                                        }
+                                                    </select>
+                                                    <label>Status</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @if (solvesheet.Status == Status.Pending)
+                                                {
+                                                    <label class="badge badge-warning">@solvesheet.Status</label>
+                                                }
+                                                else if (solvesheet.Status == Status.Resolved)
+                                                {
+                                                    <label class="badge badge-success">@solvesheet.Status</label>
+                                                }
+                                                else if (solvesheet.Status == Status.Failed)
+                                                {
+                                                    <label class="badge badge-danger">@solvesheet.Status</label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="badge">@solvesheet.Status</label>
+                                                }
+                                            }
+                                        </td>
+                                        @* <td>
+                                            @if (!solveSheet.EditMode)
+                                            {
+                                                <button type="button" class="btn btn-primary btn-sm" @onclick="() => ToggleEditMode(solvesheet)">
+                                                    <i class="bi bi-pencil-square"></i> Edit
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger btn-sm" @onclick="() => DeleteSolveSheetAsync(solvesheet)">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-gradient-primary btn-icon-text" @onclick="() => UpdateSolveSheetAsync(solvesheet)">
+                                                    <i class="mdi mdi-file-check btn-icon-prepend"></i> Save
+                                                </button>
+                                                <button type="button" class="btn btn-gradient-danger btn-icon-text" @onclick="() => CancelEdit(solvesheet)">
+                                                    <i class="fa fa-times-rectangle"></i> Cancel
+                                                </button>
+                                            }
+                                        </td> *@
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    @* Pagination Controls *@
+                    <div class="d-flex justify-content-end mt-2">
+                        <button class="btn btn-gradient-primary btn-sm me-2" @onclick="PreviousPage" disabled="@(!HasPreviousPage)"><i class="fa-solid fa-left-long"></i></button>
+                        <span>Page @currentPage of @totalPages</span>
+                        <button class="btn btn-gradient-primary btn-sm ms-2" @onclick="NextPage" disabled="@(!HasNextPage)"><i class="fa-solid fa-right-long"></i></button>
+                    </div>
+                }
+                @if (!AddRow)
+                {
+                    <div class="row">
+                        <div class="template-demo">
+                            <button class="btn btn-outline-primary btn-fw" @onclick="() => AddRowButton()"><i class="mdi mdi-file-check btn-icon-prepend"></i> Add SolveSheet</button>
+                        </div>
+                    </div>
+                }
+                @if (AddRow)
+                {
+                    <EditForm Model="solveSheet" OnValidSubmit="CreateSolveSheetAsync">
+                        <DataAnnotationsValidator />
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Issue Description</th>
+                                        <th>Solve Date</th>
+                                        <th>Comments</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control" @bind="solveSheet.IssueLogId">
+                                                <option value="0" selected>Select an IssueLog</option>
+                                                @foreach (var issuelog in issueLogs)
+                                                {
+                                                    <option value="@issuelog.Oid">@issuelog.IssueDescription</option>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="date" class="form-control" @bind="solveSheet.SolveDate" placeholder="Solve Date" />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" @bind="solveSheet.Comments" placeholder="Comments" />
+                                        </td>
+                                        <td>
+                                            <select class="form-control" @bind="solveSheet.Status" required>
+                                                <option value="0" selected>Select</option>
+                                                @foreach (Status status in Enum.GetValues(typeof(Status)))
+                                                {
+                                                    <option value="@status">@status</option>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-gradient-primary btn-icon-text" type="submit"><i class="mdi mdi-file-check btn-icon-prepend"></i> Add</button>
+                                            <button class="btn btn-gradient-danger btn-icon-text" @onclick="() => CancelRow()"><i class="fa fa-times-rectangle"></i> Cancel</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    protected async Task AddRowButton()
+    {
+        AddRow = true;
+    }
+    protected async Task CancelRow()
+    {
+        AddRow = false;
+    }
+}

@@ -1,0 +1,119 @@
+﻿@layout CustomLayout
+@page "/project/edit/{key}"
+@using BlazorApp.HttpServices
+@inject ProjectHttpService projectHttpService
+@inject NavigationManager Navigation
+
+@if (project == null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <div class="container">
+        <h3>Edit Project</h3>
+
+        <div class="card bg-light">
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label" for="description">Project Name:</label>
+                    <input type="text" class="form-control" id="description" @bind="project.Description" />
+                </div>
+                <button type="submit" class="btn btn-gradient-primary me-2" @onclick="UpdateProject">Save</button>
+                <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    Project project;
+
+    [Parameter]
+    public string key { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        project = await projectHttpService.GetprojectByIdAync(int.Parse(key));
+    }
+
+    private async Task UpdateProject()
+    {
+        try
+        {
+            await projectHttpService.UpdateProjectAsync(project);
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine($"Error: {ex.Message}");
+            Navigation.NavigateTo("/projects");
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/projects");
+    }
+}
+<style>
+    body {
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        transition: border-color 0.2s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+            border-color: #545b62;
+        }
+
+</style>

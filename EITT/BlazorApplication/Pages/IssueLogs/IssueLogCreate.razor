@@ -1,0 +1,112 @@
+﻿@layout CustomLayout
+@page "/issueLog/create"
+@using BlazorApp.HttpServices
+@using static Utilities.Constants.Enums
+@inject IssueLogHttpService issueLogHttpService
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+
+<EditForm Model="@issueLog">
+    <DataAnnotationsValidator />
+<div class="col-8 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Create IssueLog</h4>
+            <p class="card-description"></p>
+            <form class="forms-sample">
+                    <div class="form-group">
+                        <select class="form-control" @bind="issueLog.ModuleId">
+                            <option value="">Select an Module</option>
+                            @foreach (var module in modules)
+                            {
+                                <option value="@module.Oid">@module.Description</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control" @bind="issueLog.UserAccountId">
+                            <option value="">Select an UserAccount</option>
+                            @foreach (var useraccount in userAccounts)
+                            {
+                                <option value="@useraccount.Oid">@useraccount.Username</option>
+                            }
+                        </select>
+                    </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Incident Category" @bind="issueLog.IncidentCategory">
+                    <ValidationMessage For="@(() => issueLog.IncidentCategory)" />
+                </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Issue Description" @bind="issueLog.IssueDescription">
+                        <ValidationMessage For="@(() => issueLog.IssueDescription)" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Test Prodcedure" @bind="issueLog.TestProdcedure">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Image links" @bind="issueLog.Imagelinks">
+                </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Prototype Link" @bind="issueLog.Prototypelink">
+                    </div>
+                    <div class="form-group">
+                        <textarea type="text" class="form-control" id="exampleInputName1" placeholder="Comments" @bind="issueLog.Comments"/>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" @bind="issueLog.Priority" required>
+                            <option value="0" selected>Select</option>
+                            @foreach (Priority priority in Enum.GetValues(typeof(Priority)))
+                            {
+                                <option value="@priority">@priority</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <InputDate class="form-control picker" id="exampleInputName1" @bind-Value="issueLog.IssueDate" format="dd-MM-yyyy" placeholder="Issue Date" />
+                    </div>
+                    <button type="submit" class="btn btn-gradient-primary me-2" @onclick="CreateIssueLog">Submit</button>
+                    <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>
+</EditForm>
+
+@code {
+    IssueLog issueLog = new IssueLog()
+        {
+        IssueDate = DateTime.Now,
+    };
+    List<UserAccount> userAccounts = new List<UserAccount>();
+    List<Module> modules = new List<Module>();
+
+    private async Task CreateIssueLog()
+    {
+        if (issueLog.IssueDate.Date <=DateTime.Now.Date)
+        {
+            var createdIssueLog = await issueLogHttpService.CreateIssueLogAsync(issueLog);
+            Navigation.NavigateTo("/issue-list");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Issue Date cannot be a future date.");
+        }
+    }
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/issue-list");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            userAccounts = await issueLogHttpService.GetUserAccountsAsync();
+            modules = await issueLogHttpService.GetModulesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}

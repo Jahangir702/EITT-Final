@@ -1,0 +1,126 @@
+﻿<header class="navbar navbar-dark bg-secondary">
+    <div style="margin-left: 10px;">
+        <img src="https://www.excelbd.com/wp-content/uploads/2023/01/Excel_Technologies_Ltd.svg" alt="Excel Logo" style="height: 40px;filter: brightness(0) invert(1);">
+        <button class="navbar-toggler d-lg-none" type="button" onclick="openNav()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <nav class="navbar-nav d-none d-lg-flex">
+        <div class="row g-4 justify-content-end pe-lg-3">
+            <div class="col">
+                <div class="dropdown">
+                    <a class="nav-link text-light dropdown-toggle" href="#" role="button" id="settingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-gear-fill"></i> Settings
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+                        <li><a class="dropdown-item" href="projects"><i class="bi bi-bookmark-check-fill icon"></i> Project</a></li>
+                        <li><a class="dropdown-item" href="modules"><i class="bi bi-list-check icon"></i> Module</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link text-light" href="issue-list"><i class="bi bi-card-list icon"></i> IssueLog</a>
+            </div>
+            <div class="col">
+                <a class="nav-link text-light" href="solve-list"><i class="bi bi-file-spreadsheet-fill icon"></i> SolveSheet</a>
+            </div>
+            <div class="col">
+                <a class="nav-link text-light" href="user-accounts"><i class="bi bi-person-circle icon"></i> User</a>
+            </div>
+            <div class="col">
+                <a class="nav-link text-light ms-lg-auto" href="/"><i class="bi bi-person-fill-lock icon"></i> LogIn</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="issue-list"><i class="bi bi-card-list icon"></i> IssueLog</a>
+    <a href="solve-list"><i class="bi bi-file-spreadsheet-fill icon"></i> SolveSheet</a>
+    <a href="user-accounts"><i class="bi bi-person-circle icon"></i> User</a>
+    <a href="/"><i class="bi bi-person-fill-lock icon"></i> LogIn</a>
+    <a href="projects"><i class="bi bi-bookmark-check-fill icon"></i> Project</a>
+    <a href="modules"><i class="bi bi-list-check icon"></i> Module</a>
+</div>
+
+<script>
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+<style>
+    body {
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .navbar-nav .nav-link {
+        color: #fff;
+    }
+
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+            .sidebar a:hover {
+                color: #f1f1f1;
+            }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+    }
+
+    .icon {
+        margin-right: 5px;
+    }
+
+    .dropdown-menu {
+        background-color: #343a40;
+    }
+
+        .dropdown-menu a {
+            color: #ffffff;
+        }
+
+            .dropdown-menu a:hover {
+                background-color: #495057;
+            }
+
+</style>

@@ -1,0 +1,134 @@
+﻿@layout CustomLayout
+@page "/issue-list"
+@using BlazorApp.HttpServices
+@using static Utilities.Constants.Enums
+@inject IssueLogHttpService issueLogHttpService
+@inject NavigationManager navigationManager
+
+<div class="container">
+    <div class="row justify-content-center center-align">
+        <div class="col-sm-12 col-md-10 col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">IssueLog List</h4>
+                    <p class="card-description">
+                        <div class="list-card-header d-flex justify-content-between">
+                            <NavLink href="/issueLog/create" class="btn btn-primary"><i class="bi bi-file-earmark-plus"></i> Create</NavLink>
+                        </div>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Module Name</th>
+                                    <th>Incident Category</th>
+                                    <th>Issue Description</th>
+                                    <th>Test Procedure</th>
+                                    <th>Img. Links</th>
+                                    <th>Pro. Link</th>
+                                    <th>Comments</th>
+                                    <th>Priority</th>
+                                    <th>Issue Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in issueLogs)
+                                {
+                                    var Module = modules.FirstOrDefault(m => m.Oid == i.ModuleId);
+                                    <tr>
+                                        <td>@Module?.Description</td>
+                                        <td>@i.IncidentCategory</td>
+                                        <td>
+                                            @if (i.IssueDescription.Length > 20)
+                                            {
+                                                <div>
+                                                    @i.IssueDescription.Substring(0, 20)
+                                                    @if (!i.ShowFullDescription)
+                                                    {
+                                                        <button class="btn btn-link" @onclick="@(() => ToggleDescriptionVisibility(i))"><i class="bi bi-arrow-return-right"></i></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        @i.IssueDescription.Substring(20)
+                                                        <button class="btn btn-link" @onclick="@(() => ToggleDescriptionVisibility(i))"><i class="bi bi-arrow-return-left"></i></button>
+                                                    }
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @i.IssueDescription
+                                            }
+                                        </td>
+                                        <td>@i.TestProdcedure</td>
+                                        <td>@i.Imagelinks</td>
+                                        <td>@i.Prototypelink</td>
+                                        <td>@i.Comments</td>
+                                        <td>@i.Priority</td>
+                                        <td>@i.IssueDate.ToString("dd-MM-yyyy")</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-info btn-action" @onclick="@(() => navigationManager.NavigateTo($"/issuelog/edit/{i.Oid}"))" data-toggle="tooltip" title="Edit">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a class="btn btn-danger btn-action" @onclick="@(() => navigationManager.NavigateTo($"/issuelog/delete/{i.Oid}"))" data-toggle="tooltip" title="Delete">
+                                                    <i class="bi bi-trash3"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<IssueLog> issueLogs;
+    private List<UserAccount> useraccount;
+    private List<Module> modules;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllIssueLogs();
+        useraccount = await issueLogHttpService.GetUserAccountsAsync();
+        modules = await issueLogHttpService.GetModulesAsync();
+    }
+
+    private async Task GetAllIssueLogs()
+    {
+        issueLogs = await issueLogHttpService.GetIssueLogsAsync();
+    }
+
+    private void ToggleDescriptionVisibility(IssueLog issueLog)
+    {
+        issueLog.ShowFullDescription = !issueLog.ShowFullDescription;
+    }
+}
+<style>
+    .center-align {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .col-lg-6 {
+        margin: 0 auto;
+    }
+
+    .btn {
+        margin-right: 5px;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+
+        .btn i {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+</style>

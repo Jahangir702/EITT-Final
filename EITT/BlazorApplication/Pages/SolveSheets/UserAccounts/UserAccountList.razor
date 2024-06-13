@@ -1,0 +1,95 @@
+﻿@layout CustomLayout
+@page "/user-accounts"
+@using BlazorApp.HttpServices
+@inject UserAccountHttpService userAccountHttpService
+@inject NavigationManager Navigation
+
+<div class="container">
+    <div class="row justify-content-center center-align">
+        <div class="col-sm-12 col-md-10 col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">User List</h4>
+                    <p class="card-description">
+                        <div class="list-card-header d-flex justify-content-between">
+                            <NavLink href="/user-account/registration" class="btn btn-primary"><i class="bi bi-person-circle"></i> Create UserAccount</NavLink>
+                        </div>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Surname</th>
+                                    <th>Email Address</th>
+                                    <th>User Type</th>
+                                    <th>User Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var u in userAccounts)
+                                {
+                                    <tr>
+                                        <td>@u.FirstName</td>
+                                        <td>@u.Surname</td>
+                                        <td>@u.Email</td>
+                                        <td>@u.UserType</td>
+                                        <td>@u.Username</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-info btn-action" @onclick="@(() => Navigation.NavigateTo($"/user-account/edit/{u.Oid}"))" data-toggle="tooltip" title="Edit">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a class="btn btn-danger btn-action" @onclick="@(() => Navigation.NavigateTo($"/user-account/delete/{u.Oid}"))" data-toggle="tooltip" title="Delete">
+                                                    <i class="bi bi-trash3"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<UserAccount> userAccounts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllUserAccounts();
+    }
+
+    private async Task GetAllUserAccounts()
+    {
+        userAccounts = await userAccountHttpService.GetUserAccountsAsync();
+    }
+}
+<style>
+    .center-align {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .col-lg-6 {
+        margin: 0 auto;
+    }
+
+    .btn {
+        margin-right: 5px;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+
+        .btn i {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+</style>

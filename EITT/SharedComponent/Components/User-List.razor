@@ -1,0 +1,105 @@
+﻿@using Microsoft.JSInterop
+@using Microsoft.AspNetCore.Components.Forms
+@inherits SharedClass.BaseComponent.UserBaseComponent
+@inject IJSRuntime js
+@inject NavigationManager NavigationManager
+@using static Utilities.Constants.Enums
+
+<SharedComponent.Components.RequireAuthenticated></SharedComponent.Components.RequireAuthenticated>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">User List</h4>
+                    <!-- Search Section -->
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                             <input type="text" class="form-control mb-1" @bind="searchQuery" placeholder="Search First Name..." />
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                             <button class="btn btn-gradient-info btn-rounded btn-fw" @onclick="SearchUserAccounts"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                             <button class="btn btn-gradient-light btn-rounded btn-fw mt-sm-2 mt-2 mt-md-2 mt-lg-0" @onclick="ClearSearch"><i class="fa-solid fa-eraser"></i> Clear</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-2">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Surname</th>
+                                    <th>Email Address</th>
+                                    <th>User Type</th>
+                                    <th>User Name</th>
+                                    @* <th>Actions</th> *@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var u in PagedUserAccounts)
+                                {
+                                    <tr>
+                                        <td>@u.FirstName</td>
+                                        <td>@u.Surname</td>
+                                        <td>@u.Email</td>
+                                        <td>
+                                            @if (u.UserType == UserType.Developer)
+                                            {
+                                                <label class="badge badge-gradient-success">@u.UserType</label>
+                                            }
+                                            else if (u.UserType == UserType.Tester)
+                                            {
+                                                <label class="badge badge-gradient-warning">@u.UserType</label>
+                                            }
+                                            else
+                                            {
+                                                <label class="badge">@u.UserType</label>
+                                            }
+                                        </td>
+                                        <td>@u.Username</td>
+                                        @* <td>
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-info btn-action" @onclick="@(() => NavigationManager.NavigateTo($"/user-account/{u.Oid}"))" data-toggle="tooltip" title="Edit">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                            </div>
+                                        </td> *@
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination Controls -->
+                    <div class="d-flex justify-content-end mt-2">
+                        <button class="btn btn-gradient-primary btn-sm me-2" @onclick="PreviousPage" disabled="@(!HasPreviousPage)"><i class="fa-solid fa-left-long"></i></button>
+                        <span>Page @currentPage of @totalPages</span>
+                        <button class="btn btn-gradient-primary btn-sm ms-2" @onclick="NextPage" disabled="@(!HasNextPage)"><i class="fa-solid fa-right-long"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .center-align {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .col-lg-6 {
+        margin: 0 auto;
+    }
+
+    .btn {
+        margin-right: 5px;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+
+    .btn i {
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+</style>

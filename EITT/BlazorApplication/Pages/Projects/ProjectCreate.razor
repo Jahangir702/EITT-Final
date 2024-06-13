@@ -1,0 +1,52 @@
+﻿@layout CustomLayout
+@page "/project/create"
+@using BlazorApp.HttpServices
+@inject ProjectHttpService projectHttpService
+@inject NavigationManager Navigation
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-8">
+            <EditForm Model="@project">
+                <DataAnnotationsValidator />
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Create Project</h4>
+                        <form class="forms-sample">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Project Name" @bind="project.Description">
+                                <ValidationMessage For="@(() => project.Description)" />
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-gradient-primary me-md-2 mb-2 mb-md-0" @onclick="CreateProject">Submit</button>
+                                <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    Project project = new Project();
+
+    private async Task CreateProject()
+    {
+        try
+        {
+            var createproject = await projectHttpService.CreateProjectAsync(project);
+            Navigation.NavigateTo("/projects");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/projects");
+    }
+}

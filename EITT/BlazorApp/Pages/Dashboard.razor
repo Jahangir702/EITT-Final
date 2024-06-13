@@ -1,0 +1,189 @@
+﻿@page "/dashboard"
+@using static Utilities.Constants.Enums
+@layout CustomLayout
+@inherits SharedClass.BaseComponent.ModuleBaseComponent
+@inject NavigationManager Navigation
+
+@code {
+    bool isProjectsClicked = false;
+    Project selectedProject;
+    bool isModuleClicked = false;
+    Module selectedModule;
+
+    void HandleProjectsClick(Project project)
+    {
+        isProjectsClicked = true;
+        selectedProject = project;
+    }
+
+    void HandleModuleClick(Module module)
+    {
+        isModuleClicked = true;
+        selectedModule = module;
+    }
+
+
+}
+<!-- Count section -->
+<div class="row">
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-info card-img-holder text-white">
+            <div class="card-body" @onclick="() => HandleProjectsClick(null)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click Here show All Project">
+                <img src="template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">
+                    Projects <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-5">@projects.Count</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-success card-img-holder text-white">
+            <div class="card-body">
+                <img src="template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">
+                    Modules <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-5">@modules.Count</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-danger card-img-holder text-white">
+            <div class="card-body">
+                <img src="template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">
+                    IssueLog <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+                </h4>
+                <h2 class="mb-5">@issueLogs.Count</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Project section -->
+<div class="row">
+    <div class="template-demo mt-3">
+        <h4 class="card-title float-start justify-content-start mt-2">Projects</h4>
+        <NavLink class="btn btn-outline-primary btn-fw float-end justify-content-end" href="/projects"><i class="mdi mdi-file-check btn-icon-prepend"></i> Add Project</NavLink>
+    </div>
+    <div class="">
+    </div>
+    @foreach (var item in projects)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6 stretch-card grid-margin">
+            <div class="card-body">
+                <h4 class="card-title"></h4>
+                <div class="template-demo">
+                    <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw" @onclick="() => HandleProjectsClick(item)">@item.Description</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Module section -->
+@if (isProjectsClicked == true)
+{
+    <div class="row">
+        <div class="template-demo mt-3">
+            <h4 class="card-title float-start justify-content-start mt-2">Modules</h4>
+            <NavLink class="btn btn-outline-primary btn-icon-text float-end justify-content-end" href="/modules"><i class="mdi mdi-file-check btn-icon-prepend"></i>Add Module</NavLink>
+        </div>
+        @foreach (var item in modules.Where(m => selectedProject != null && m.ProjectId == selectedProject.Oid))
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 stretch-card grid-margin">
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <div class="template-demo">
+                        <button type="button" class="btn btn-gradient-success btn-rounded btn-fw" @onclick="() => HandleModuleClick(item)">@item.Description</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<!-- IssueLog section -->
+@if (isModuleClicked == true)
+{
+    <div class="row">
+        <div class="template-demo mt-3">
+            <h4 class="card-title float-start justify-content-start mt-2">IssueLog</h4>
+            <NavLink class="btn btn-outline-primary btn-icon-text float-end justify-content-end mb-2" href="/issueLogs"><i class="mdi mdi-file-check btn-icon-prepend"></i>Add IssueLog</NavLink>
+        </div>
+        <div class="col-lg-12 col-md-10 col-sm-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="template-demo">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Incident Category</th>
+                                        <th>Issue Description</th>
+                                        <th>Test Prodcedure</th>
+                                        <th>Image links</th>
+                                        <th>Prototypelink</th>
+                                        <th>Comments</th>
+                                        <th>Priority</th>
+                                        <th>IssueDate</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in issueLogs.Where(i => selectedModule != null && i.ModuleId == selectedModule.Oid))
+                                {
+                                    <tbody class="table-border-bottom-0">
+                                        <tr>
+                                            <td>@item.IncidentCategory</td>
+                                            <td>@item.IssueDescription</td>
+                                            <td>@item.TestProdcedure</td>
+                                            <td>@item.Imagelinks</td>
+                                            <td>@item.Prototypelink</td>
+                                            <td>@item.Comments</td>
+                                            <td>
+                                                @if (item.Priority == Priority.High)
+                                                {
+                                                    <label class="badge badge-gradient-danger">@item.Priority</label>
+                                                }
+                                                else if (item.Priority == Priority.Standard)
+                                                {
+                                                    <label class="badge badge-gradient-success">@item.Priority</label>
+                                                }
+                                                else if (item.Priority == Priority.Low)
+                                                {
+                                                    <label class="badge badge-gradient-warning">@item.Priority</label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="badge">@item.Priority</label>
+                                                }
+                                            </td>
+
+                                            <td>@item.IssueDate.ToString("dd-MM-yyyy")</td>
+                                            <td>
+                                                <button class="btn btn-outline-primary btn-sm">
+                                                    <i class="bi bi-pencil-square"></i> Edit
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .grid-margin {
+        margin-bottom: 0.5rem !important;
+    }
+</style>

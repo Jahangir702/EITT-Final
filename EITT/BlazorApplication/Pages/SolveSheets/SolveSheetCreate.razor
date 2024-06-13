@@ -1,0 +1,88 @@
+﻿@layout CustomLayout
+@page "/solvesheet/create"
+@using BlazorApp.HttpServices
+@using static Utilities.Constants.Enums
+@inject SolveSheetHttpService solvesheetHttpService
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+
+<EditForm Model="@solveSheet">
+    <DataAnnotationsValidator />
+<div class="container">
+    <h3>Create New SolveSheet</h3>
+    <div class="card bg-light">
+        <div class="card-body">
+            <div class="form-group">
+                    <label for="issueLogs">Issue Description:</label>
+                <select class="form-control" @bind="solveSheet.IssueLogId">
+                        <option value="">Select an IssueDescription</option>
+                    @foreach (var issueLog in issueLogs)
+                    {
+                        <option value="@issueLog.Oid">@issueLog.IssueDescription</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                    <InputDate class="form-control picker" @bind-Value="solveSheet.SolveDate" format="dd-MM-yyyy" placeholder="Issue Date" />
+            </div>
+
+            <div class="form-group">
+                <label for="Status">Status:</label>
+                <select class="form-control" @bind="solveSheet.Status" required>
+                    <option value="0" selected>Select</option>
+                    @foreach (Status status in Enum.GetValues(typeof(Status)))
+                    {
+                        <option value="@status">@status</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                    <textarea id="comments" class="form-control" @bind="solveSheet.Comments" placeholder="Comments" />
+            </div>
+            
+            <div class="button-group">
+                    <button class="btn btn-gradient-primary me-2" @onclick="CreateSolveSheet">Save</button>
+                <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+</EditForm>
+
+@code {
+    SolveSheet solveSheet = new SolveSheet()
+        {
+            SolveDate = DateTime.Now,
+    };
+    List<IssueLog> issueLogs = new List<IssueLog>();
+
+    private async Task CreateSolveSheet()
+    {
+        if (solveSheet.SolveDate.Date <= DateTime.Now.Date)
+        {
+            var createdSolveSheet = await solvesheetHttpService.CreateSolveSheetAsync(solveSheet);
+            Navigation.NavigateTo("/solve-list");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Solve Date cannot be a future date.");
+        }
+    }
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/solve-list");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            issueLogs = await solvesheetHttpService.GetIssueLogsAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}

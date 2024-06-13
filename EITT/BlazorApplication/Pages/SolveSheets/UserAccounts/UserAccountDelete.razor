@@ -1,0 +1,91 @@
+﻿@page "/user-account/delete/{key}"
+@using BlazorApp.HttpServices
+@using static Utilities.Constants.Enums
+@inject UserAccountHttpService userAccountHttpService
+@inject NavigationManager Navigation
+
+<div class="container">
+    <h3>Delete User</h3>
+
+    @if (userAccount == null)
+    {
+        <LoadingIndicator />
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <p>Are you sure you want to delete the User <strong>@userAccount.Username</strong>?</p>
+            <button class="btn btn-danger" @onclick="DeleteUserAccount">Delete</button>
+            <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+        </div>
+    }
+</div>
+
+@code {
+    UserAccount userAccount;
+
+    [Parameter]
+    public string key { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        userAccount = await userAccountHttpService.GetUserAccountByIdAync(Guid.Parse(key));
+    }
+
+    private async Task DeleteUserAccount()
+    {
+        try
+        {
+            await userAccountHttpService.DeleteUserAccountAsync(key);
+            Navigation.NavigateTo("/user-accounts");
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/user-accounts");
+    }
+}
+<style>
+    body {
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .alert {
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+            border-color: #545b62;
+        }
+
+</style>

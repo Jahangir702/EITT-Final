@@ -1,0 +1,318 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.JSInterop
+@using static Utilities.Constants.Enums
+@inherits SharedClass.BaseComponent.IssueLogBaseComponent
+@inject IJSRuntime js
+@inject NavigationManager NavigationManager
+
+<SharedComponent.Components.RequireAuthenticated></SharedComponent.Components.RequireAuthenticated>
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-12 col-md-10 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between">IssueLog</h4>
+                <!-- Search Section -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <input type="text" class="form-control mb-1" @bind="searchQuery" placeholder="Search IssueDescription..." />
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <button class="btn btn-gradient-info btn-rounded btn-fw" @onclick="SearchIssueLogs"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                        <button class="btn btn-gradient-light btn-rounded btn-fw mt-sm-2 mt-2 mt-md-2 mt-lg-0" @onclick="ClearSearch"><i class="fa-solid fa-eraser"></i> Clear</button>
+                    </div>
+                </div>
+                @if (issueLogs != null && issueLogs.Count != 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Module Name</th>
+                                    <th>Incident Category</th>
+                                    <th>Issue Description</th>
+                                    <th>Test Procedure</th>
+                                    <th>Image Links</th>
+                                    <th>Prototype Link</th>
+                                    <th>Comments</th>
+                                    <th>Priority</th>
+                                    <th>Issue Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var issueLog in pagedIssueLogs)
+                                {
+                                    var module1 = modules.FirstOrDefault(m => m.Oid == issueLog.ModuleId);
+                                    <tr>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-control" @bind="issueLog.ModuleId">
+                                                        <option value="0" selected>Select a Module</option>
+                                                        @foreach (var module in modules)
+                                                        {
+                                                            <option value="@module.Oid">@module.Description</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @module1?.Description
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" @bind="issueLog.IncidentCategory" placeholder="Incident Category" />
+                                                    <label>Incident Category</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @issueLog.IncidentCategory
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" @bind="issueLog.IssueDescription" placeholder="Issue Description" />
+                                                    <label>Issue Description</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @issueLog.IssueDescription
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" @bind="issueLog.TestProdcedure" placeholder="Test Procedure" />
+                                                    <label>Test Procedure</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @issueLog.TestProdcedure
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" @bind="issueLog.Imagelinks" placeholder="Image Links" />
+                                                    <label>Image Links</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @issueLog.Imagelinks
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" @bind="issueLog.Prototypelink" placeholder="Prototype Link" />
+                                                    <label>Prototype Link</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @issueLog.Prototypelink
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" @bind="issueLog.Comments" placeholder="Comments" />
+                                                    <label>Comments</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @issueLog.Comments
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-control" @bind="issueLog.Priority" required>
+                                                        <option value="0" selected>Select</option>
+                                                        @foreach (Priority priority in Enum.GetValues(typeof(Priority)))
+                                                        {
+                                                            <option value="@priority">@priority</option>
+                                                        }
+                                                    </select>
+                                                    <label>Priority</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @if (issueLog.Priority == Priority.High)
+                                                {
+                                                    <label class="badge badge-gradient-danger">@issueLog.Priority</label>
+                                                }
+                                                else if (issueLog.Priority == Priority.Standard)
+                                                {
+                                                    <label class="badge badge-gradient-success">@issueLog.Priority</label>
+                                                }
+                                                else if (issueLog.Priority == Priority.Low)
+                                                {
+                                                    <label class="badge badge-gradient-warning">@issueLog.Priority</label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="badge">@issueLog.Priority</label>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (issueLog.EditMode)
+                                            {
+                                                <div class="form-floating mb-3">
+                                                    <input type="date" class="form-control" @bind="issueLog.IssueDate" placeholder="Issue Date" />
+                                                    <label>Issue Date</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @issueLog.IssueDate.ToString("dd-MM-yyyy")
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (!issueLog.EditMode)
+                                            {
+                                                <button type="button" class="btn btn-primary btn-sm" @onclick="() => ToggleEditMode(issueLog)">
+                                                    <i class="bi bi-pencil-square"></i> Edit
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger btn-sm" @onclick="() => DeleteIssueLogAsync(issueLog)">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-gradient-primary btn-icon-text" @onclick="() => UpdateIssueLogAsync(issueLog)">
+                                                    <i class="mdi mdi-file-check btn-icon-prepend"></i> Save
+                                                </button>
+                                                <button type="button" class="btn btn-gradient-danger btn-icon-text" @onclick="() => CancelEdit(issueLog)">
+                                                    <i class="fa fa-times-rectangle"></i> Cancel
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    @* Pagination Controls *@
+                    <div class="d-flex justify-content-end mt-2">
+                        <button class="btn btn-gradient-primary btn-sm me-2" @onclick="PreviousPage" disabled="@(!HasPreviousPage)"><i class="fa-solid fa-left-long"></i></button>
+                        <span>Page @currentPage of @totalPages</span>
+                        <button class="btn btn-gradient-primary btn-sm ms-2" @onclick="NextPage" disabled="@(!HasNextPage)"><i class="fa-solid fa-right-long"></i></button>
+                    </div>
+                }
+                @if (!AddRow)
+                {
+                    <div class="row">
+                        <div class="template-demo">
+                            <button class="btn btn-outline-primary btn-fw" @onclick="() => AddRowButton()"><i class="mdi mdi-file-check btn-icon-prepend"></i> Add IssueLog</button>
+                        </div>
+                    </div>
+                }
+                @if (AddRow)
+                {
+                    <EditForm Model="@issueLog" OnValidSubmit="CreateIssueLogAsync">
+                        <DataAnnotationsValidator />
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Module</th>
+                                        <th>Incident Category</th>
+                                        <th>Issue Description</th>
+                                        <th>Test Procedure</th>
+                                        <th>Image Links</th>
+                                        <th>Prototype Link</th>
+                                        <th>Comments</th>
+                                        <th>Priority</th>
+                                        <th>Issue Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control" @bind="issueLog.ModuleId">
+                                                <option value="0" selected>Select a Module</option>
+                                                @foreach (var module in modules)
+                                                {
+                                                    <option value="@module.Oid">@module.Description</option>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" @bind="issueLog.IncidentCategory" placeholder="IncidentCategory" />
+                                            <ValidationMessage For="@(() => issueLog.IncidentCategory)" />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" @bind="issueLog.IssueDescription" placeholder="IssueDescription" />
+                                            <ValidationMessage For="@(() => issueLog.IssueDescription)" />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" @bind="issueLog.TestProdcedure" placeholder="TestProdcedure" />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" @bind="issueLog.Imagelinks" placeholder="Imagelinks" />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" @bind="issueLog.Prototypelink" placeholder="Prototypelink" />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" @bind="issueLog.Comments" placeholder="Comments" />
+                                        </td>
+                                        <td>
+                                            <select class="form-control" @bind="issueLog.Priority" required>
+                                                <option value="0" selected>Select</option>
+                                                @foreach (Priority priority in Enum.GetValues(typeof(Priority)))
+                                                {
+                                                    <option value="@priority">@priority</option>
+                                                }
+                                            </select>
+                                            <ValidationMessage For="@(() => issueLog.Priority)" />
+                                        </td>
+                                        <td>
+                                            <input type="date" class="form-control" @bind="issueLog.IssueDate" placeholder="IssueDate" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-gradient-primary btn-icon-text" type="submit"><i class="mdi mdi-file-check btn-icon-prepend"></i> Add</button>
+                                            <button class="btn btn-gradient-danger btn-icon-text" @onclick="() => CancelRow()"><i class="fa fa-times-rectangle"></i> Cancel</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected async Task AddRowButton()
+    {
+        AddRow = true;
+    }
+    protected async Task CancelRow()
+    {
+        AddRow = false;
+    }
+}

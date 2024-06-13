@@ -1,0 +1,91 @@
+﻿@layout CustomLayout
+@page "/modules"
+@using BlazorApp.HttpServices
+@inject ModuleHttpService moduleHttpService
+@inject NavigationManager navigationManager
+
+<div class="container">
+    <div class="row justify-content-center center-align">
+        <div class="col-sm-12 col-md-10 col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Module List</h4>
+                    <p class="card-description">
+                        <div class="list-card-header d-flex justify-content-between">
+                            <NavLink href="/modules/create" class="btn btn-primary"><i class="bi bi-file-earmark-plus"></i> Create</NavLink>
+                        </div>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Project Name</th>
+                                    <th>Module Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var m in module)
+                                {
+                                    var project = projects.FirstOrDefault(p => p.Oid == m.ProjectId);
+                                    <tr>
+                                        <td>@project?.Description</td>
+                                        <td>@m.Description</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-info btn-action" @onclick="@(() => navigationManager.NavigateTo($"/modules/edit/{m.Oid}"))" data-toggle="tooltip" title="Edit">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a class="btn btn-danger btn-action" @onclick="@(() => navigationManager.NavigateTo($"/modules/delete/{m.Oid}"))" data-toggle="tooltip" title="Delete">
+                                                    <i class="bi bi-trash3"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Module> module;
+    private List<Project> projects;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllModules();
+        projects = await moduleHttpService.GetProjectsAsync();
+    }
+    private async Task GetAllModules()
+    {
+        module = await moduleHttpService.GetModulesAsync();
+    }
+}
+<style>
+    .center-align {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .col-lg-6 {
+        margin: 0 auto;
+    }
+
+    .btn {
+        margin-right: 5px;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+
+        .btn i {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+</style>

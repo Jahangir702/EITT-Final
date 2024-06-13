@@ -1,0 +1,10 @@
+@import '_content/Blazored.Toast/Blazored.Toast.bundle.scp.css';
+@import '_content/PSC.Blazor.Components.AutoComplete/PSC.Blazor.Components.AutoComplete.bundle.scp.css';
+
+/* _content/SharedComponent/Component1.razor.rz.scp.css */
+.my-component[b-cwnw5e9p3y] {
+    border: 2px dashed red;
+    padding: 1em;
+    margin: 1em 0;
+    background-image: url('background.png');
+}
